@@ -1,6 +1,6 @@
 ### 运行时架构 
 
-![img](https://raw.githubusercontent.com/jgr-great/fabric-note/master/image/fw.png) 
+![img](https://raw.githubusercontent.com/jgr-great/fabric-note/master/image/fw.png)  
 
 1) APP：代表一个客户端（CLI）或SDK，作用是创建交易并获取到足够的背书之后向Orderer排序服务节点提交交易请求（Peer与Orderer节点提供了gRPC远程访问接口，供客户端调用）。
 
