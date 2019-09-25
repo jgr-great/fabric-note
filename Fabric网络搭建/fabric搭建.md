@@ -89,65 +89,60 @@ query  查询账户 `peer chaincode query -n txcc -C mychannel -c '{"Args":["que
     mkdir aberic
 ```
 
-#### 已下在 A主机下运行    
+### 在A主机中设置配置文件  
 1. 下载1.3版本所需的二进制文件
-https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/linux-amd64-1.3.0/hyperledger-fabric-linux-amd64-1.3.0.tar.gz
+	https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/linux-amd64-1.3.0/hyperledger-fabric-linux-amd64-1.3.0.tar.gz
 2. cd 到根目录
 3. 下载并解压 解压出 /bin/ 和 /config/ 两个目录
-```
-wget https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/linux-amd64-1.3.0/hyperledger-fabric-linux-amd64-1.3.0.tar.gz
-tar -zxvf hyperledger-fabric-linux-amd64-1.3.0.tar.gz
-```
-4. 将 /bin/ 文件夹拷贝到 aberic 目录下
+	```bash
+	wget https://nexus.hyperledger.org/content/repositories/releases/org/hyperledger/fabric/hyperledger-fabric/linux-amd64-1.3.0/hyperledger-fabric-linux-amd64-1.3.0.tar.gz
+	tar -zxvf hyperledger-fabric-linux-amd64-1.3.0.tar.gz
+	```
+将 /bin/ 文件夹拷贝到 aberic 目录下
 
-* crypto-config.yaml 配置 
+4. crypto-config.yaml 配置 
 
 	在 aberic 下建立 crypto-config.yaml,  生成节点所需配置文件: 
 
-
- `./bin/cryptogen generate --config=./crypto-config.yaml` 
+ 	`./bin/cryptogen generate --config=./crypto-config.yaml` 
 
 > 运行完多了个 crypto-config 文件夹
 
-* configtx.yaml 配置 
-    在 aberic 下建立 configtx.yaml, 参照源码 examples/e2e_cli/configtx.yaml, 进行更改, 生成创世区块及设定 Fabric 网络启动类型: 
-    
-* 生成创世块文件:
+5. configtx.yaml 配置 
+	在 aberic 下建立 configtx.yaml,  生成创世区块及设定 Fabric 网络启动类型: 
   
-```bash
-mkdir channel-artifacts 
-./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
-```
-* 创世区块 genesis.block 是为了 Orderer 排序服务启动时用到, Peer 节点在启动后需要创建的 Channel 的配置文件在这里也一并生成:  
+	* 生成创世块文件:
+  
+	```bash
+	mkdir channel-artifacts 
+	./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+	```
+6. 创建channel.tx
+	* 创世区块 genesis.block 是为了 Orderer 排序服务启动时用到, Peer 节点在启动后需要创建的 Channel 的配置文件在这里也一并生成:  
 
-```bash
-./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
-```
+	```bash
+	./bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/mychannel.tx -channelID mychannel
+	```
 
-* 将生成的 channel-artifacts  crypto-config 两个文件夹，拷贝到其他2台机器的 aberic 目录
+7. 将生成的 channel-artifacts  crypto-config 两个文件夹，拷贝到其他2台机器的 aberic 目录
 
-### Zookeeper 配置 (3个zookeeper)
+8. Zookeeper 配置 (3个zookeeper)
 
 	创建 docker-zookeeper1.yaml docker-zookeeper2.yaml docker-zookeeper3.yaml 文件
-	将 zk2.yaml 文件复制到相应的 zk2 节点 aberic 文件夹
-	将 zk3.yaml 文件复制到相应的 zk3 节点 aberic 文件夹
 
-### Kafka 配置 (3个kafka)
+9. Kafka 配置 (3个kafka)
+
 	创建 docker-kafka1.yaml docker-kafka2.yaml docker-kafka3.yaml docker-kafka4.yaml 文件
-	将 kfk2.yaml 文件复制到相应的 kfk2 节点 aberic 文件夹
-	将 kfk3.yaml 文件复制到相应的 kfk3 节点 aberic 文件夹
-	将 kfk4.yaml 文件复制到相应的 kfk4 节点 aberic 文件夹
 
-### Order 配置 (3个order)
+10. Order 配置 (3个order)
 	创建 docker-orderer0.yaml docker-orderer1.yaml docker-orderer2.yaml 文件
-	将 orderer1.yaml 文件复制到相应的 orderer1 节点 aberic 文件夹
-	将 orderer2.yaml 文件复制到相应的 orderer2 节点 aberic 文件夹
+11. 将对应的 *.yaml*文件分别复制到相应的 orderer1 和orderer2 节点 aberic 文件夹 
 
 
 
 ### 启动 Zookeeper 集群
 	- zookeeper1:
-		docker-compose -f docker-zookeeper1.yaml up -d           # 这里没有加 -d, 是为了看启动日志
+		docker-compose -f docker-zookeeper1.yaml up -d        
 	- "zookeeper2:
 		docker-compose -f docker-zookeeper2.yaml up -d
 	- zookeeper3:
@@ -224,7 +219,7 @@ Error: could not assemble transaction, err proposal response was not successful,
 * **导入智能合约时必须包含main文件**
 
 
-6 实例化智能合约: 只需要实例化一次，其他节点只需要安装，不用再实例化
+6. 实例化智能合约: 只需要实例化一次，其他节点只需要安装，不用再实例化
 
 ```bash
 # 开启tls条件下
@@ -237,7 +232,7 @@ peer chaincode instantiate -o orderer0.example.com:7050 -n txcc -v 1.0 -c '{"Arg
 peer chaincode list -C mychannel --instantiated
 ```
 
-7 调用智能合约:
+7. 调用智能合约
 ```bash
 # 开启tls条件下
 peer chaincode invoke -o orderer0.example.com:7050 \
