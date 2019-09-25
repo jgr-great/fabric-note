@@ -20,7 +20,7 @@
 
 7) Peer：表示组织中的节点；Peer节点以区块的形式从Orderer排序服务节点接收有序状态更新，维护状态和账本。在Fabtic网络环境中 Peer 节点可以划分为如下角色：
 
-* ​	Endorsing peer：根据指定的策略调用智能合约，对结果进行背书， 返回提案响应到客户端。
+* Endorsing peer：根据指定的策略调用智能合约，对结果进行背书， 返回提案响应到客户端。
 * Committing peer：验证数据并保存至账本中。
 
 * Anchor peer：跨组织通信。
