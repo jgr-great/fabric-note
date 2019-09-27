@@ -16,7 +16,7 @@ func New(configProvider core.ConfigProvider, opts ...Option) (*FabricSDK, error)
 ```go
 import(
 	"github.com/hyperledger/fabric-sdk-go/pkg/core/config"
-  "github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
+	"github.com/hyperledger/fabric-sdk-go/pkg/fabsdk"
 )
 // ConfigPath: 配置文件路径
 sdk, err := fabsdk.New(config.FromFile(ConfigPath))

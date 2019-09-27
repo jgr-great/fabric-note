@@ -8,7 +8,7 @@
 
 * 证书配置项
 
-* ORE_PEER_LOCALMSPID=Org[*组织序号*]MSP
+* ORE_PEER_LOCALMSPID=Org*[组织序号]*MSP
 
   > docker-peer0org[index].yaml
 

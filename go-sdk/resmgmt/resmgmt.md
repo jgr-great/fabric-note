@@ -1,3 +1,5 @@
+# resmgmt
+
 resmgmt支持在Fabric网络上创建和更新资源。resmgmt允许管理员创建、更新通道，并允许Peer节点加入通道。管理员还可以在Peer节点上执行与链码相关的操作，例如安装，实例化和升级链码。
 
 resmgmt使用基本流程如下：
@@ -53,7 +55,7 @@ func (rc *Client) QueryInstantiatedChaincodes(channelID string, options ...Reque
 
 * 初始化
 
-  > [local](../local.md)
+  > [local](../local.md)详解
 
 ```go
 // orgAdmin:组织成员-管理员
