@@ -1,4 +1,4 @@
-# Channel 
+# Channel
 
 channel 包对Fabric网络上的channel访问提供了支持，在一个特定channel上，一个channel实例与peer们交互；还可以对chaincode进行查询、执行、注册或注销。
 
@@ -49,7 +49,7 @@ type Response struct {
 
 
 
-### Example
+## Example
 
 ```go
 //ChannelContext creates and returns channel context
@@ -58,7 +58,7 @@ func (sdk *FabricSDK) ChannelContext(channelID string, options ...ContextOption)
 
 
 
-* 实例化
+### 实例化
 
 ```go
 import(
@@ -76,7 +76,7 @@ clientContext := sdk.ChannelContext(ChannelID,
 chClient, err := channel.New(clientContext)
 ```
 
-* chaincode 查询（query）
+### chaincode 查询（query）
 
 ```go
 var args []string
@@ -94,7 +94,7 @@ peers, err := local.LocalDiscoveryService().GetPeers()
 response, err := chClient.Query(req, channel.WithTargets(peers[0]))
 ```
 
-* chaincode 调用（invoke）
+### chaincode 调用（invoke）
 
 ```go
 req := channel.Request{
@@ -107,7 +107,12 @@ req := channel.Request{
 	response, err := util.client.Execute(req)
 ```
 
-* chaincode 调用之event
+### chaincode 调用之event
+
+* 作用：SDK能够接收到该事件的状态信息
+* 如果要注册*event*，在编写chaincode需要设置*event* ，并且SDK内注册的*eventID*和chaincode内的*eventID*要一致
+
+***
 
 需要用的 API
 
@@ -122,9 +127,9 @@ req := channel.Request{
 func (c *Client) RegisterChaincodeEvent(ccID, eventFilter string) (fab.Registration, <-chan *fab.CCEvent, error)
 ```
 
-作用：SDK能够接收到该事件的状态信息
+***
 
-在chaincode内*set event*，eventID可以自定义
+在chaincode内设置事件
 
 ```go
 // Transaction makes payment of X units from A to B
