@@ -8,9 +8,9 @@
 
 * 证书配置项
 
-* ORE_PEER_LOCALMSPID=Org*[组织序号]*MSP
+* ORE_PEER_LOCALMSPID=Org*[组织序号]*MSP，MSPID必须唯一
 
-  > docker-peer0org[index].yaml
+  > 该配置在docker-peer0org[index].yaml中定义
 
 
 
@@ -310,7 +310,18 @@ peer chaincode invoke -o orderer0.example.com:7050 -C mychannel -n txcc --peerAd
 
 * CORE_PEER_LOCALMSPID 设置错误
 
+***
 
+Chaincode 升级（upgrade）之后，创建新用户报错
+
+```verilog
+2019-09-29 09:06:21.761 UTC [vscc] Validate -> ERRO e98 VSCC error: stateBasedValidator.Validate failed, err validation of endorsement policy for chaincode txcc in tx 14:0 failed: signature set did not satisfy policy
+2019-09-29 09:06:21.761 UTC [committer.txvalidator] validateTx -> ERRO e99 VSCCValidateTx for transaction txId = 289e4a46caedec32dca489d168d48ca00cd0e5dbd5d5d93e7661eae33da2616d returned error: validation of endorsement policy for chaincode txcc in tx 14:0 failed: signature set did not satisfy policy
+```
+
+问题的原因可能是升级前后的策略不一致导致的
+
+因为chaincode之前的策略是`"OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"`,升级之后的策略是`OutOf(2,'Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')`。我又进行了一次升级，将策略改回去就好了。
 
 #### 网上其他问题
 
