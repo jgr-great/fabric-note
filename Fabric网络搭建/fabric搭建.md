@@ -37,6 +37,10 @@ query  查询账户 `peer chaincode query -n txcc -C mychannel -c '{"Args":["que
 > 切换到 root 权限: 
 >     sudo su -
 
+### docker 清理
+
+docker kill $(docker ps -a -q)&&docker rm $(docker ps -a -q)&&docker volume prune
+
 ### 安装 go 环境: 
 1. `wget https://studygolang.com/dl/golang/go1.11.linux-amd64.tar.gz`
 2. `tar -zxvf go1.11.linux-amd64.tar.gz -C /usr/lib`
@@ -112,7 +116,7 @@ query  查询账户 `peer chaincode query -n txcc -C mychannel -c '{"Args":["que
 	在 aberic 下建立 configtx.yaml,  生成创世区块及设定 Fabric 网络启动类型: 
   
 	* 生成创世块文件:
-  
+   
 	```bash
 	mkdir channel-artifacts 
 	./bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
@@ -174,9 +178,14 @@ Peer 节点的交互止步于 Orderer 排序服务节点, 并不关注顶层建�
 1. 在 aberic 下创建 **docker-peer0org1.yaml** 文件, 并启动:
 
 ```bash
-export CA_PKEY=$(cd $PWD/crypto-config/peerOrganizations/org[index].example.com/ca && ls *_sk)
-echo $CA_PKEY
+export CA_PKEY=$(cd $PWD/crypto-config/peerOrganizations/org1.example.com/ca && ls *_sk) && echo $CA_PKEY
 docker-compose -f docker-peer0org1.yaml up -d  
+
+export CA_PKEY=$(cd $PWD/crypto-config/peerOrganizations/org2.example.com/ca && ls *_sk) && echo $CA_PKEY
+docker-compose -f docker-peer0org2.yaml up -d 
+
+export CA_PKEY=$(cd $PWD/crypto-config/peerOrganizations/org3.example.com/ca && ls *_sk) && echo $CA_PKEY
+docker-compose -f docker-peer0org3.yaml up -d 
 ```
 
 2. 进入 cli:  
@@ -223,7 +232,7 @@ Error: could not assemble transaction, err proposal response was not successful,
 
 ```bash
 # 开启tls条件下
-peer chaincode instantiate -o orderer0.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -n txcc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -C mychannel -P "OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+peer chaincode instantiate -o orderer0.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -n txcc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -C mychannel -P "AND ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
 
 # 关闭tls条件下
 peer chaincode instantiate -o orderer0.example.com:7050 -n txcc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -C mychannel -P " OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
@@ -268,7 +277,7 @@ peer channel join -b mychannel.block
 ```
 **安装链码**:
 ```bash
-peer chaincode install -n marbles02 -p github.com/hyperledger/fabric/examples/chaincode/go/transaction -v 1.0
+peer chaincode install -n txcc -p github.com/hyperledger/fabric/examples/chaincode/go/example02/cmd -v 1.0
 ```
 
 **调用查询**:
@@ -466,3 +475,29 @@ error Entry not found in index
 
 
 查询的数据不存在。最直观的可能就是你所查询的数据是脏数据，源数据已经被清除，再查询时，就会报这个错误
+
+---
+
+### 更新锚节点
+
+生成锚节点配置
+
+```shell
+#首先生成Org1的锚节点配置文件
+./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID mychannel -asOrg Org1MSP
+#生成Org2的锚节点配置文件
+./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID mychannel -asOrg Org2MSP
+
+./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org3MSPanchors.tx -channelID mychannel -asOrg Org3MSP
+```
+
+
+
+* Org1
+
+```shell
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
+```
+
