@@ -232,7 +232,7 @@ Error: could not assemble transaction, err proposal response was not successful,
 
 ```bash
 # 开启tls条件下
-peer chaincode instantiate -o orderer0.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -n txcc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -C mychannel -P "AND ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
+peer chaincode instantiate -o orderer0.example.com:7050 --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -n txcc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -C mychannel -P "OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
 
 # 关闭tls条件下
 peer chaincode instantiate -o orderer0.example.com:7050 -n txcc -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -C mychannel -P " OR ('Org1MSP.peer','Org2MSP.peer','Org3MSP.peer')"
@@ -487,7 +487,7 @@ error Entry not found in index
 ./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID mychannel -asOrg Org1MSP
 #生成Org2的锚节点配置文件
 ./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID mychannel -asOrg Org2MSP
-
+#生成Org3的锚节点配置文件
 ./bin/configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org3MSPanchors.tx -channelID mychannel -asOrg Org3MSP
 ```
 
@@ -496,8 +496,26 @@ error Entry not found in index
 * Org1
 
 ```shell
-ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
+peer channel update -o orderer0.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
 ```
+
+* Org2
+
+```shell
+export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+peer channel update -o orderer1.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
+```
+
+* Org3
+
+```shell
+export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer2.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+peer channel update -o orderer2.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
+```
+
+
 
