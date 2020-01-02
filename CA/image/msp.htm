@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!-- saved from url=(0089)https://hyperledger-fabric.readthedocs.io/en/release-1.4/msp-identity-validity-rules.html -->
+<html class="js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths translated-ltr" lang="zh-CN" style=""><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>MSP身份有效性规则-hyperledger-fabricdocs主文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="./msp_files/sphinx_rtd_theme.css" type="text/css">
+  
+    <link rel="stylesheet" href="./msp_files/custom.css" type="text/css">
+  
+
+  
+        <link rel="index" title="指数" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/genindex.html">
+        <link rel="search" title="搜索" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/search.html">
+    <link rel="top" title="hyperledger-fabricdocs主文档" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/index.html"> 
+
+  
+  <script async="" src="./msp_files/analytics.js"></script><script src="./msp_files/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/msp-identity-validity-rules.html">
+
+<link rel="stylesheet" href="./msp_files/readthedocs-doc-embed.css" type="text/css">
+
+<script type="text/javascript" src="./msp_files/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "msp-identity-validity-rules"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="./msp_files/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="./msp_files/translateelement.css"></head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+
+          
+            <a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/index.html" class="icon icon-home"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> hyperledger-fabricdocs
+          
+
+          
+          </font></font></a>
+
+          
+            
+            
+            
+              <div class="version"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                版本1.4
+              </font></font></div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="https://hyperledger-fabric.readthedocs.io/en/release-1.4/search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+
+<br><img style="background-color: #fff; height: unset; width: unset;" alt="超级账本面料" src="./msp_files/hyperledger_fabric_logo_color.png">
+<br>
+<a href="https://github.com/hyperledger/fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="的GitHub" src="./msp_files/github_button.png"></a>
+&nbsp;<a href="https://stackoverflow.com/questions/tagged/hyperledger-fabric"><img style="padding: 0px; margin: auto auto auto auto;" alt="堆栈溢出" src="./msp_files/stackoverflow_button.png"></a>
+&nbsp;<a href="https://chat.hyperledger.org/"><img style="padding: 0px; margin: auto auto auto auto;" alt="火箭聊天" src="./msp_files/rocketchat_button.png"></a>
+&nbsp;<a href="https://www.youtube.com/playlist?list=PL0MZ85B_96CH7wvtrRzV7SvtRY0sI0DEg"><img style="padding: 0px; margin: auto auto auto auto;" alt="YouTube频道" src="./msp_files/youtube_button.png"></a>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="主导航">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/whatis.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">介绍</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/whatsnew.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">v1.4的新增功能</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/whatsnew.html#release-notes"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">发行说明</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/key_concepts.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">关键概念</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/getting_started.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">入门</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/developapps/developing_applications.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">开发应用程序</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/tutorials.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">讲解</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/ops_guide.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">操作指南</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/command_ref.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">命令参考</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/architecture.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">架构参考</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/Fabric-FAQ.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">经常问的问题</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/CONTRIBUTING.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">捐款欢迎！</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/glossary.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">词汇表</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/releases.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">发布</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/questions.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">还有问题吗？</font></font></a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/status.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">状态</font></font></a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-bmr3pkrn" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/fjGvApDDKLBL/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="./msp_files/english-house.png"></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/fjGvApDDKLBL/" rel="nofollow" target="_blank"><b><font style="vertical-align: inherit;"></font></b><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用“阅读文档”做广告时，每月可</font><b><font style="vertical-align: inherit;">吸引700万开发人员</font></b></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">。</font></font></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">赞助</font></font></a><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">· </font></font></span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">广告以道德的方式投放</font></font></a></em></small></div></div><img src="./msp_files/saved_resource" style="display: none;"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="顶部导航">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/index.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">hyperledger-fabricdocs</font></font></a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="面包屑导航">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/index.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">文件</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> »</font></font></li>
+        
+      <li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MSP身份有效性规则</font></font></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/hyperledger/fabric/blob/release-1.4/docs/source/msp-identity-validity-rules.rst" class="fa fa-github"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 在GitHub上编辑</font></font></a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="msp-identity-validity-rules">
+<h1><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MSP身份有效性规则</font></font><a class="headerlink" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/msp-identity-validity-rules.html#msp-identity-validity-rules" title="固定到该标题"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">¶</font></font></a></h1>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">如MSP说明中所述，MSP可以配置有一组根证书颁发机构（rCA），以及可选的一组中间证书颁发机构（iCA）。</font><font style="vertical-align: inherit;">MSP的iCA证书必须</font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">完全</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">由MSP的rCA或iCA之一签名。</font><font style="vertical-align: inherit;">MSP的配置可能包含证书吊销列表或CRL。</font><font style="vertical-align: inherit;">如果CRL中列出了MSP的任何根证书颁发机构，则MSP的配置中不得包含CRL中也包含的任何iCA，否则MSP设置将失败。</font></font></p>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">每个rCA都是认证树的根。</font><font style="vertical-align: inherit;">也就是说，每个rCA可能是一个或多个iCA证书的签名者，而这些iCA将是其他iCA或用户证书的签名者。</font><font style="vertical-align: inherit;">这里有一些例子：</font></font></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>        <span class="n">rCA1</span>                <span class="n">rCA2</span>         <span class="n">rCA3</span>
+      <span class="o">/</span>    \                 <span class="o">|</span>            <span class="o">|</span>
+   <span class="n">iCA1</span>    <span class="n">iCA2</span>             <span class="n">iCA3</span>          <span class="nb">id</span>
+    <span class="o">/</span> \      <span class="o">|</span>               <span class="o">|</span>
+<span class="n">iCA11</span> <span class="n">iCA12</span> <span class="nb">id</span>              <span class="nb">id</span>
+ <span class="o">|</span>
+<span class="nb">id</span>
+</pre></div>
+</div>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">默认的MPS实施接受由相应机构签名的X.509证书作为有效身份。</font><font style="vertical-align: inherit;">在上图中，只有由iCA11，iCA12，iCA2，iCA3和rCA3签名的证书才被视为有效。</font><font style="vertical-align: inherit;">内部节点签名的证书将被拒绝。</font></font></p>
+<p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">请注意，如果在MSP配置中指定了一个或多个组织单位，则证书的有效性也会以类似的方式受到影响。</font><font style="vertical-align: inherit;">回想一下，在MSP配置中将组织单位指定为两个值对，例如分别表示代表该组织单位的证书颁发机构的（父证书，ou-string）和实际组织单位标识符。</font><font style="vertical-align: inherit;">如果证书C由在MSP配置中指定了组织单位的iCA或rCA签名，则C除其他要求外，如果在其OU字段中包括ou-string，则认为C有效。</font></font></p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr><div><div id="rtd-ogfitjpdj" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+        ©版权所有Hyperledger 2019.
+     </font></font><br>
+      <br><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">本作品根据</font></font><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">知识共享署名4.0国际许可</font></font></a>
+      <font style="vertical-align: inherit;"><span class="commit"><font style="vertical-align: inherit;">
+          修订版</font></span><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><font style="vertical-align: inherit;">许可</font></a><span class="commit"><font style="vertical-align: inherit;">。
+        </font></span></font><a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
+        <img alt="知识共享许可" src="./msp_files/88x31.png"></a>
+      
+        <span class="commit"><font style="vertical-align: inherit;"></font><code>3bae50c8</code><font style="vertical-align: inherit;"></font></span>
+      
+
+    </p>
+  </div><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+  使用</font></font><a href="http://sphinx-doc.org/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sphinx</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">使用</font><a href="https://readthedocs.org/"><font style="vertical-align: inherit;">Read the Docs</font></a><font style="vertical-align: inherit;">提供</font><font style="vertical-align: inherit;">的</font></font><a href="https://github.com/snide/sphinx_rtd_theme"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">主题</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">构建</font><font style="vertical-align: inherit;">。 
+
+</font></font><a href="https://readthedocs.org/"><font style="vertical-align: inherit;"></font></a><font style="vertical-align: inherit;"></font></footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="版本">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">阅读Docs</font></font></span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> 
+      v：版本1.4
+      </font></font><span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版本</font></font></dt>
+        
+        
+        <dd><a href="https://hyperledger-fabric.readthedocs.io/en/master/msp-identity-validity-rules.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">主</font></font></a></dd>
+        
+        
+        
+        <dd><a href="https://hyperledger-fabric.readthedocs.io/en/latest/msp-identity-validity-rules.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">最新</font></font></a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/msp-identity-validity-rules.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版本1.4</font></font></a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.3/msp-identity-validity-rules.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版本1.3</font></font></a></dd>
+        
+        
+        
+        <dd><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.2/msp-identity-validity-rules.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版本1.2</font></font></a></dd>
+        
+        
+        
+        <dd><a href="https://hyperledger-fabric.readthedocs.io/en/release-1.1/msp-identity-validity-rules.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">版本1.1</font></font></a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">下载</font></font></dt>
+        
+        <dd><a href="https://readthedocs.org/projects/hyperledger-fabric/downloads/pdf/release-1.4/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PDF格式</font></font></a></dd>
+        
+        <dd><a href="https://readthedocs.org/projects/hyperledger-fabric/downloads/htmlzip/release-1.4/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">的HTML</font></font></a></dd>
+        
+        <dd><a href="https://readthedocs.org/projects/hyperledger-fabric/downloads/epub/release-1.4/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">pub</font></font></a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">阅读文档</font></font></dt>
+        <dd>
+          <a href="https://readthedocs.org/projects/hyperledger-fabric/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">项目首页</font></font></a>
+        </dd>
+        <dd>
+          <a href="https://readthedocs.org/projects/hyperledger-fabric/builds/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">建立</font></font></a>
+        </dd>
+        <dd>
+          <a href="https://readthedocs.org/projects/hyperledger-fabric/downloads/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">下载</font></font></a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">在GitHub上</font></font></dt>
+        <dd>
+          <a href="https://github.com/hyperledger/fabric/blob/release-1.4/docs/source/msp-identity-validity-rules.rst"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">视图</font></font></a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/hyperledger/fabric/edit/release-1.4/docs/source/msp-identity-validity-rules.rst"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">编辑</font></font></a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">搜寻</font></font></dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="https://readthedocs.org/projects/hyperledger-fabric/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs">
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr>
+      
+        <small>
+          <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">主持者：</font></font><a href="https://readthedocs.org/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">阅读文档</font></font></a></span>
+          <span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> · </font></font></span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">隐私政策</font></font></a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'master',
+            LANGUAGE:'en',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="./msp_files/jquery.js"></script>
+      <script type="text/javascript" src="./msp_files/underscore.js"></script>
+      <script type="text/javascript" src="./msp_files/doctools.js"></script>
+      <script type="text/javascript" src="./msp_files/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="goog-gt-tt" class="skiptranslate" dir="ltr"><div style="padding: 8px;"><div><div class="logo"><img src="./msp_files/translate_24dp.png" width="20" height="20" alt="Google Translate"></div></div></div><div class="top" style="padding: 8px; float: left; width: 100%;"><h1 class="title gray">Original text</h1></div><div class="middle" style="padding: 8px;"><div class="original-text"></div></div><div class="bottom" style="padding: 8px;"><div class="activity-links"><span class="activity-link">Contribute a better translation</span><span class="activity-link"></span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none;"></div></div><div id="rtd-pnvnhzjx"></div><div class="goog-te-spinner-pos"><div class="goog-te-spinner-animation"><svg xmlns="http://www.w3.org/2000/svg" class="goog-te-spinner" width="96px" height="96px" viewBox="0 0 66 66"><circle class="goog-te-spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle></svg></div></div></body></html>

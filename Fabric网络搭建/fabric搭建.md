@@ -208,7 +208,7 @@ peer channel create -o orderer0.example.com:7050  -c mychannel -f ./channel-arti
 5. 安装智能合约:
 
 ```bash
-export CC_SRC_PATH=github.com/hyperledger/fabric/examples/chaincode/go/example02/cmd
+export CC_SRC_PATH=github.com/hyperledger/fabric/examples/chaincode/go/example02/cmd && \
 peer chaincode install -n txcc -v 1.0 -p ${CC_SRC_PATH}
 
 # 查看是否安装成功
@@ -506,7 +506,7 @@ peer channel update -o orderer0.example.com:7050 -c mychannel -f ./channel-artif
 ```shell
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer1.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-peer channel update -o orderer1.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
+peer channel update -o orderer0.example.com:7050 -c mychannel -f ./channel-artifacts/Org2MSPanchors.tx --tls true --cafile $ORDERER_CA
 ```
 
 * Org3
@@ -514,8 +514,56 @@ peer channel update -o orderer1.example.com:7050 -c mychannel -f ./channel-artif
 ```shell
 export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer2.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
 
-peer channel update -o orderer2.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile $ORDERER_CA
+peer channel update -o orderer2.example.com:7050 -c mychannel -f ./channel-artifacts/Org3MSPanchors.tx --tls true --cafile $ORDERER_CA
 ```
 
 
+
+本地加入channel
+
+* org1
+
+```shell
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp && \
+export CORE_PEER_ADDRESS=peer0.org1.example.com:7051 && \
+export CORE_PEER_LOCALMSPID="Org1MSP" && \
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+
+peer channel join -b mychannel.block
+peer channel list
+```
+
+
+
+* org2
+
+```shell
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp && \
+export CORE_PEER_ADDRESS=peer0.org2.example.com:7051 && \
+export CORE_PEER_LOCALMSPID="Org2MSP" && \
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt
+
+peer channel join -b mychannel.block
+peer channel list
+```
+
+* org3
+
+```shell
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org3.example.com/msp && \
+export CORE_PEER_ADDRESS=peer0.org3.example.com:7051 && \
+export CORE_PEER_LOCALMSPID="Org3MSP" && \
+export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org3.example.com/tls/ca.crt
+
+peer channel join -b mychannel.block
+peer channel list
+```
+
+### 重新添加组织到channel
+
+```shell
+export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer0.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+peer channel fetch 0 mychannel.block -o orderer0.example.com:7050 -c mychannel --tls --cafile $ORDERER_CA
+```
 
